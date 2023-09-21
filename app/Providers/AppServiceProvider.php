@@ -11,7 +11,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Check if the app is in local environment
+        if ((env('APP_ENV') !== 'local')) {
+            $this->app['request']->server->set('HTTPS', true);
+        }
     }
 
     /**
@@ -19,6 +22,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        header('X-Powered-By:');
+        \Illuminate\Support\Facades\Schema::defaultStringLength(191);
+        \Illuminate\Pagination\Paginator::useBootstrap();
     }
 }
