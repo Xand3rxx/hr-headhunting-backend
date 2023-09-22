@@ -31,14 +31,14 @@ class Controller extends BaseController
 
     /**
      * Return a failed response with or without data.
-     * 
-     * @param string $message
+     *
      * @param array $errors
+     * @param string $message
      * @param mixed $code
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function failedResponse(string $message = '', array $errors = [], int $statusCode = Response::HTTP_NOT_FOUND)
+    public function failedResponse(array $errors = [], string $message = '', int $statusCode = Response::HTTP_NOT_FOUND)
     {
         $response = [
             'success' => false,

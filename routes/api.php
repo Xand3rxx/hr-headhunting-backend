@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::prefix('auth/candidate/')->group(function () {
+    Route::controller(\Candidate\CandidateController::class)->group(function () {
+        Route::post('register', 'store')->name('candidate.register');
+    });
+});
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
