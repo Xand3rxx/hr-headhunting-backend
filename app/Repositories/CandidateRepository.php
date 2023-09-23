@@ -4,9 +4,20 @@ namespace App\Repositories;
 
 use App\Interfaces\CandidateRepositoryInterface;
 use App\Models\User;
+use Symfony\Component\HttpFoundation\Response;
 
 class CandidateRepository implements CandidateRepositoryInterface
 {
+    /**
+     *  Repository function to authenticate a candidate.
+     */
+    public function authentication($payload)
+    {
+        // Instance of the Authentication service
+        $auth = new \App\Services\Authentication();
+        return $auth->handle($payload);
+    }
+
     /**
      *  Repository function to get all candidates.
      */
@@ -23,7 +34,7 @@ class CandidateRepository implements CandidateRepositoryInterface
         $user = User::whereUuid($uuid)->first();
 
         if (empty($user)) {
-            throwException('Candidate not found.');
+            throwException('Candidate not found.', Response::HTTP_NOT_FOUND);
         }
 
         return $user;

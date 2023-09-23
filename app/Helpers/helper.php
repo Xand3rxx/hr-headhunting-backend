@@ -501,10 +501,12 @@ if (!function_exists('revokeAccessToken')) {
 
 if (!function_exists('throwException')) {
     /**
-     * Throw an error response
+     * Throw an error exception response
+     *
      * @param string  $message
+     * @param int  $code
      */
-    function throwException($message)
+    function throwException($message, int $code = Response::HTTP_UNPROCESSABLE_ENTITY)
     {
         // Trim and transform the message to sentence case
         $message = toSentenceCase(trim($message));
@@ -513,7 +515,7 @@ if (!function_exists('throwException')) {
             throw new HttpResponseException(response()->json([
                 'success'   => false,
                 'message'   => $message,
-            ], Response::HTTP_UNPROCESSABLE_ENTITY));
+            ], $code));
         }
 
         throw new GeneralException($message);

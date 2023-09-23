@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Candidate;
+namespace App\Http\Requests;
 
-use Illuminate\Validation\Rules\Password;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
 
-class Registration extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,20 +25,8 @@ class Registration extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email', 'max:191', 'unique:users'],
-            'password' => ['required', 'string', Password::min(8)->mixedCase()->uncompromised()],
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'email.required'            => 'Please provide valid email.',
-            'password.required'         => 'Please provide a password.',
-            'password.string'           => 'The password must be a string.',
-            'password.min'              => 'The password must be at least 8 characters long.',
-            'password.mixed_case'       => 'The password must contain both upper and lower case letters.',
-            'password.uncompromised'    => 'The password has been compromised and is not secure. Please choose a different password.',
+            'email'     => ['required', 'email', 'max:255'],
+            'password'  => ['required', 'string', 'min:8'],
         ];
     }
 
@@ -55,7 +42,6 @@ class Registration extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'success' => false,
-            'message'   => 'Failed to process registration request due to validation errors.',
             'errors' => $validator->errors()
         ], Response::HTTP_UNPROCESSABLE_ENTITY));
     }

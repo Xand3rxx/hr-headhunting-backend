@@ -80,4 +80,15 @@ class CandidateController extends Controller
     {
         //
     }
+
+    /**
+     * Authenticate a candidate login request.
+     *
+     * @param  \App\Http\Requests\Candidate\Registration  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function login(\App\Http\Requests\LoginRequest $request)
+    {
+        return $this->successResponse($this->candidate->authentication($request), 'Login was successful.');
+    }
 }

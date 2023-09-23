@@ -29,7 +29,7 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         $this->routes(function () {
-            Route::middleware('api')
+            Route::middleware(['api', 'cors', 'json.response'])
                 ->namespace('App\\Http\\Controllers\Api')
                 ->prefix('api')
                 ->group(base_path('routes/api.php'));
